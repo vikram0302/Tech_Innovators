@@ -1,0 +1,151 @@
+version: "1.0"
+rules:
+  - rule_id: SET-01
+    standard_section: "Section 1"
+    title: Acknowledgment within 24 hours
+    description: Claim acknowledged within 24 hours of receipt.
+    type: deterministic
+    required_inputs: [receipt_timestamp, acknowledgment_event]
+    threshold: "24 hours (day granularity in MVP)"
+    severity_if_failed: medium
+    remediation: Document receipt time and send acknowledgment within 24 hours.
+
+  - rule_id: COM-01
+    standard_section: "Section 2"
+    title: Initial contact within 48 hours
+    description: Assigned adjuster contacts claimant within 48 hours of receipt.
+    type: deterministic
+    required_inputs: [open_date, first_contact_date]
+    threshold: "48 hours (day granularity)"
+    severity_if_failed: high
+    remediation: Contact claimant within 48 hours of assignment.
+
+  - rule_id: COM-02
+    standard_section: "Section 2"
+    title: Ongoing claimant updates
+    description: No gap longer than 14 days between claimant-facing updates while open.
+    type: deterministic
+    required_inputs: [claimant_communications]
+    threshold: "14 days"
+    severity_if_failed: medium
+    remediation: Provide regular updates to the claimant at least every 14 days.
+
+  - rule_id: COM-03
+    standard_section: "Section 2"
+    title: Communications documented in notes
+    description: Each communication reflected in claim notes with date and summary.
+    type: deterministic
+    required_inputs: [notes, communications]
+    threshold: null
+    severity_if_failed: medium
+    remediation: Add dated note summaries for each claimant communication.
+
+  - rule_id: INV-01
+    standard_section: "Section 3"
+    title: Investigation within 30 days
+    description: Investigation completed within 30 days unless extenuating reason documented.
+    type: deterministic
+    required_inputs: [open_date, close_date]
+    threshold: "30 days"
+    severity_if_failed: high
+    remediation: Complete investigation within 30 days or document extension reason.
+
+  - rule_id: RES-01
+    standard_section: "Section 4"
+    title: Initial reserve documented
+    description: Initial reserve documented at first notice.
+    type: deterministic
+    required_inputs: [initial_reserve]
+    threshold: null
+    severity_if_failed: medium
+    remediation: Document initial reserve at FNOL.
+
+  - rule_id: RES-02
+    standard_section: "Section 4"
+    title: Reserve review every 60 days
+    description: Reserve reviewed at least every 60 days with justification for changes.
+    type: deterministic
+    required_inputs: [reserve_review_dates]
+    threshold: "60 days"
+    severity_if_failed: medium
+    remediation: Schedule and document reserve reviews every 60 days.
+
+  - rule_id: DOC-01
+    standard_section: "Section 6"
+    title: Chronological notes
+    description: Notes appear in date order.
+    type: deterministic
+    required_inputs: [notes]
+    threshold: null
+    severity_if_failed: low
+    remediation: Ensure notes are entered in chronological order.
+
+  - rule_id: DOC-02
+    standard_section: "Section 6"
+    title: Final report on resolution
+    description: A final report exists once the claim is resolved.
+    type: deterministic
+    required_inputs: [final_report_note]
+    threshold: null
+    severity_if_failed: high
+    remediation: Add a final assessment report before closing the claim.
+
+  - rule_id: FRD-01
+    standard_section: "Section 9"
+    title: SIU referral documented
+    description: If fraud indicator flagged, referral or documented decision not to refer exists.
+    type: deterministic
+    required_inputs: [fraud_indicator, siu_documentation]
+    threshold: null
+    severity_if_failed: high
+    remediation: Document SIU referral or rationale for non-referral.
+
+  - rule_id: INV-02
+    standard_section: "Section 3"
+    title: Investigation thoroughness
+    description: Statements, photos, and documents gathered or follow-up documented.
+    type: judgment
+    required_inputs: [timeline]
+    threshold: null
+    severity_if_failed: medium
+    remediation: Follow up on requested evidence or document why not needed.
+
+  - rule_id: INV-03
+    standard_section: "Section 3"
+    title: Liability support
+    description: Liability conclusion supported by evidence in the file.
+    type: judgment
+    required_inputs: [timeline]
+    threshold: null
+    severity_if_failed: high
+    remediation: Strengthen liability analysis with documented evidence.
+
+  - rule_id: DOC-03
+    standard_section: "Section 6"
+    title: Notes vs communications consistency
+    description: Notes and communication logs do not contradict on dates or facts.
+    type: judgment
+    required_inputs: [notes, communications]
+    threshold: null
+    severity_if_failed: medium
+    remediation: Reconcile discrepancies between notes and communication log.
+
+  - rule_id: FRD-02
+    standard_section: "Section 9"
+    title: Fraud red flags
+    description: Indicators that should trigger SIU review are identified.
+    type: judgment
+    required_inputs: [timeline]
+    threshold: null
+    severity_if_failed: high
+    remediation: Escalate to SIU when red flags are present.
+
+  - rule_id: LIT-01
+    standard_section: "Section 8"
+    title: Litigation potential identified early
+    description: Litigation potential identified early where facts suggest it.
+    type: judgment
+    required_inputs: [timeline]
+    threshold: null
+    severity_if_failed: medium
+    remediation: Document litigation risk assessment early in the file.

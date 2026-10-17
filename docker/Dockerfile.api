@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY backend/requirements.txt /app/backend/requirements.txt
+RUN pip install --no-cache-dir -r backend/requirements.txt
+
+COPY backend /app/backend
+COPY sample_data /app/sample_data
+
+ENV PYTHONPATH=/app
+ENV USE_MEMORY_DB=true
+ENV UPLOAD_DIR=uploads
+
+EXPOSE 8080
+CMD ["uvicorn", "backend.api.main:app", "--host", "0.0.0.0", "--port", "8080"]
